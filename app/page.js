@@ -11,6 +11,9 @@ export default function Page() {
         <Link href="./week-3/" rel="noopener noreferrer">
           --&gt; Go to Week 3
         </Link>
+        <Link href="./week-4/" rel="noopener noreferrer">
+          --&gt; Go to Week 4
+        </Link>
       </p>
     </main>
   );
