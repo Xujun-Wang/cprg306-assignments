@@ -3,7 +3,12 @@
 import { useState } from "react";
 
 export default function NewItem() {
-    const [quantity, setQuantity] = useState(1);
+  
+  // name field
+  const [name, setName] = useState("");
+
+  // quantity field
+  const [quantity, setQuantity] = useState(1);
 
     const increment = () => {
         if (quantity < 20) {
@@ -16,6 +21,9 @@ export default function NewItem() {
             setQuantity(quantity - 1);
         }
     }
+
+    // category field
+    const [category, setCategory] = useState("Produce");
   
     return (
       <section className="rounded border border-gray-200 p-4 bg-white">
