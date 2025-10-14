@@ -6,10 +6,10 @@ import items from "./items.json";
 import { useState } from "react";
 
 export default function ItemList() {
-  // Initialize state variable for sorting preference
+  // set default sort by name
   const [sortBy, setSortBy] = useState("name");
 
-  // Sort items based on sortBy state
+  // sort items based on sortBy state
   const sortedItems = [...items].sort((a, b) => {
     if (sortBy === "name") {
       return a.name.localeCompare(b.name);
@@ -22,7 +22,7 @@ export default function ItemList() {
   return (
     <section className="space-y-4">
     <div className="flex items-center gap-2">
-      <span className="text-lg text-white">Sort by:</span>
+      <span className="text-md text-white">Sort by:</span>
       {/* Sort buttons */}
         <button
           onClick={() => setSortBy("name")}
