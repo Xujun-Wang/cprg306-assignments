@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function NewItem() {
+export default function NewItem({ onAddItem }) {
   
   // name field
   const [name, setName] = useState("");
@@ -41,13 +41,13 @@ export default function NewItem() {
       e.preventDefault();
       
       const item = {
+        id: Math.random().toString(36).substr(2, 9),
         name,
         quantity,
         category
       };
       
-      console.log(item);
-      alert(`Item: ${name}\nQuantity: ${quantity}\nCategory: ${category}`);
+      onAddItem(item);
       
       setName("");
       setQuantity(1);
@@ -64,6 +64,7 @@ export default function NewItem() {
         <input
           type="text"
           id="name"
+          autoComplete="off"
           value={name}
           onChange={updateItemName}
           required
@@ -74,7 +75,7 @@ export default function NewItem() {
 
       {/* quantity */}
       <div>
-        <label htmlFor="quantity" className="text-sm text-gray-500">Quantity (1–20)</label>
+        <span className="text-sm text-gray-500">Quantity (1–20)</span>
         <p className="mb-3">
             <span className="text-xl text-gray-600">Current Quantity: </span>
             <span className="text-3xl font-bold text-pink-400">{quantity}</span>
@@ -110,6 +111,7 @@ export default function NewItem() {
         </label>
         <select
           id="category"
+          autoComplete="off"
           value={category}
           onChange={updateItemCategory}
           required

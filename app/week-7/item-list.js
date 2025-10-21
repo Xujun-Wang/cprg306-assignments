@@ -2,10 +2,9 @@
 
 import React from "react";
 import Item from "./item";
-import items from "./items.json";
 import { useState } from "react";
 
-export default function ItemList() {
+export default function ItemList({ items }) {
   // set default sort by name
   const [sortBy, setSortBy] = useState("name");
 
@@ -20,7 +19,7 @@ export default function ItemList() {
   });
 
   return (
-    <section className="space-y-4">
+    <section className="space-y-4 mt-4">
     <div className="flex items-center gap-2">
       <span className="text-md text-white">Sort by:</span>
       {/* Sort buttons */}
