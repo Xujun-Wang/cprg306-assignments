@@ -16,8 +16,6 @@ export const AuthContextProvider = ({ children }) => {
  
   const gitHubSignIn = () => {
     const provider = new GithubAuthProvider();
-    provider.addScope('user:email');
-    provider.addScope('read:user');
     return signInWithPopup(auth, provider);
   };
  
@@ -30,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
       setUser(currentUser);
     });
     return () => unsubscribe();
-  }, []);
+  }, [user]); // [user] or []
  
   return (
     <AuthContext.Provider value={{ user, gitHubSignIn, firebaseSignOut }}>
