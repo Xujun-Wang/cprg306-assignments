@@ -16,6 +16,8 @@ export const AuthContextProvider = ({ children }) => {
  
   const gitHubSignIn = () => {
     const provider = new GithubAuthProvider();
+    provider.addScope('user:email');
+    provider.addScope('read:user');
     return signInWithPopup(auth, provider);
   };
  
