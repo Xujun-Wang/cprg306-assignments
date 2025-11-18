@@ -28,7 +28,7 @@ export default function Page() {
   // Load items when component mounts or user changes
   useEffect(() => {
     loadItems();
-  }, [user]);
+  }, [loadItems, user]);
 
   // Handle adding a new item
   const handleAddItem = async (newItem) => {
