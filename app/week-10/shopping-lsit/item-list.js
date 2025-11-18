@@ -4,7 +4,7 @@ import React from "react";
 import Item from "./item";
 import { useState } from "react";
 
-export default function ItemList({ items, onItemSelect }) {
+export default function ItemList({ items, onItemSelect, onDeleteItem }) {
   // set default sort by name
   const [sortBy, setSortBy] = useState("name");
 
@@ -44,13 +44,15 @@ export default function ItemList({ items, onItemSelect }) {
       {/* Items list */}
       <ul className="space-y-2">
         {sortedItems.map((item) => (
-          <Item
-            key={item.id}
-            name={item.name}
-            quantity={item.quantity}
-            category={item.category}
-            onSelect={() => onItemSelect(item)}
-          />
+          <li key={item.id}>
+            <Item
+              name={item.name}
+              quantity={item.quantity}
+              category={item.category}
+              onSelect={() => onItemSelect(item)}
+              onDelete={() => onDeleteItem(item.id)}
+            />
+          </li>
         ))}
       </ul>
     </section>

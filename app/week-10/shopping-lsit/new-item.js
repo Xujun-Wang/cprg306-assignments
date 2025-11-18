@@ -41,10 +41,9 @@ export default function NewItem({ onAddItem }) {
       e.preventDefault();
       
       const item = {
-        id: Math.random().toString(36).substr(2, 9),
         name,
         quantity,
-        category
+        category: category.toLowerCase()
       };
       
       onAddItem(item);

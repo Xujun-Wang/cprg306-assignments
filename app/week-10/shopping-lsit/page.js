@@ -1,20 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUserAuth } from "../../../contexts/AuthContext";
 import ItemList from "./item-list";
-import itemsData from "./items.json";
 import NewItem from "./new-item";
 import MealIdeas from "./meal-ideas";
 import Link from "next/link";
+import { getItems, addItem, deleteItem } from "../_services/shopping-list-service";
 
 export default function Page() {
   const { user } = useUserAuth();
-  const [items, setItems] = useState(itemsData);
+  const [items, setItems] = useState([]);
   const [selectedItemName, setSelectedItemName] = useState("");
 
-  const handleAddItem = (newItem) => {
-    setItems([...items, newItem]);
+  // Load items from Firestore
+  const loadItems = async () => {
+    if (user) {
+      try {
+        const userItems = await getItems(user.uid);
+        setItems(userItems);
+      } catch (error) {
+        console.error("Error loading items:", error);
+      }
+    }
+  };
+
+  // Load items when component mounts or user changes
+  useEffect(() => {
+    loadItems();
+  }, [user]);
+
+  // Handle adding a new item
+  const handleAddItem = async (newItem) => {
+    try {
+      const newItemId = await addItem(user.uid, newItem);
+      const itemWithId = { id: newItemId, ...newItem };
+      setItems([...items, itemWithId]);
+    } catch (error) {
+      console.error("Error adding item:", error);
+    }
+  };
+
+  // Handle deleting an item
+  const handleDeleteItem = async (itemId) => {
+    try {
+      await deleteItem(user.uid, itemId);
+      setItems(items.filter(item => item.id !== itemId));
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   };
 
   const handleItemSelect = (item) => {
@@ -48,7 +82,7 @@ export default function Page() {
         {/*Shopping list side*/}
         <div className="space-y-4">
           <NewItem onAddItem={handleAddItem} />
-          <ItemList items={items} onItemSelect={handleItemSelect} />
+          <ItemList items={items} onItemSelect={handleItemSelect} onDeleteItem={handleDeleteItem} />
         </div>
         {/*Meal ideas side */}
         <div>
