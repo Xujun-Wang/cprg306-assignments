@@ -13,22 +13,23 @@ export default function Page() {
   const [items, setItems] = useState([]);
   const [selectedItemName, setSelectedItemName] = useState("");
 
-  // Load items from Firestore
-  const loadItems = async () => {
-    if (user) {
+  useEffect(() => {
+    const loadItems = async () => {
+      if (!user) {
+        setItems([]);
+        return;
+      }
+
       try {
         const userItems = await getItems(user.uid);
         setItems(userItems);
       } catch (error) {
         console.error("Error loading items:", error);
       }
-    }
-  };
+    };
 
-  // Load items when component mounts or user changes
-  useEffect(() => {
     loadItems();
-  }, [loadItems, user]);
+  }, [user]);
 
   // Handle adding a new item
   const handleAddItem = async (newItem) => {
